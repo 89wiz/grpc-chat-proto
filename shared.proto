@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option csharp_namespace = "gRPCTemplate.gRPC";
+
+package shared;
+
+message ErrorMessage {
+	int32 errorCode = 1;
+	string message = 2;
+	repeated ErrorMessage errorDetails = 3;
+}

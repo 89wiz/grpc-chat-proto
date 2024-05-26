@@ -1,2 +1,49 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+import "Proto/shared.proto";
+
+option csharp_namespace = "gRPCTemplate.gRPC";
+
+package auth;
+
+service Auth{
+	rpc Register (RegisterRequest) returns (RegisterResponse);
+	rpc Login (LoginRequest) returns (LoginResponse);
+}
+
+message RegisterRequest{
+	string login = 1;
+	string nickname = 2;
+	string password = 3;
+	string confirmPassword = 4;
+}
+
+message RegisterResponse{
+	oneof result {
+		RegisterSuccessResponse success = 1;
+		shared.ErrorMessage error = 2;
+	}
+}
+
+message RegisterSuccessResponse{
+	string login = 1;
+	string nickname = 2;
+	google.protobuf.Timestamp createdAt = 3;
+}
+
+message LoginRequest{
+	string login = 1;
+	string password = 3;
+}
+
+message LoginResponse{
+	oneof result {
+		LoginSuccessResponse success = 1;
+		shared.ErrorMessage error = 2;
+	}
+}
+
+message LoginSuccessResponse{
+	string token = 1;
+}
